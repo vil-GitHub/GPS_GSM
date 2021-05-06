@@ -1,0 +1,24 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"files.associations": {
+			"usart.h": "c",
+			"stm32f10x_usart.h": "c",
+			"gps.h": "c",
+			"string.h": "c",
+			"stdio.h": "c",
+			"gpio.h": "c",
+			"nvic.h": "c",
+			"mylib.h": "c",
+			"sys.h": "c",
+			"stm32f10x.h": "c",
+			"gsm.h": "c",
+			"key.h": "c",
+			"exti.h": "c"
+		}
+	}
+}

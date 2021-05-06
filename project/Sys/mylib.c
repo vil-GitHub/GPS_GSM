@@ -102,7 +102,7 @@ void Deal_Longitude_Gps(void)
     mid_longitude_points = mid_longitude_points / 60;                                                    //分秒换算为小数位
     mid_longitude_vale = mid_longitude_degree + mid_longitude_points;                                    //最终为度格式000.00000000 非度分秒格式
     SaveData.longitude[0] = mid_longitude_vale / 100000000 + 0x30;
-    SaveData.longitude[1] = mid_longitude_vale / 10000000 + 0x30; //转化为字符
+    SaveData.longitude[1] = (mid_longitude_vale / 10000000) % 10 + 0x30; //转化为字符
     SaveData.longitude[2] = (mid_longitude_vale / 1000000) % 10 + 0x30;
     SaveData.longitude[3] = '.';
     SaveData.longitude[4] = (mid_longitude_vale / 100000) % 10 + 0x30;

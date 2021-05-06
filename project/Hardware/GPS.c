@@ -16,7 +16,7 @@ void USART3_IRQHandler(void)
             Usart3_Point = 0;
         }
         USART3_RX_BUF[Usart3_Point++] = Res;
-        if (USART3_RX_BUF[0] == '$' && USART3_RX_BUF[4] == 'M' && USART3_RX_BUF[5] == 'C') //确认是否收到"XXXMC"这一帧数据
+        if (USART3_RX_BUF[0] == '$' && USART3_RX_BUF[4] == 'M' && USART3_RX_BUF[5] == 'C') //确认是否收到"XXRMC"这一帧数据
         {
             if (Res == '\n')
             {

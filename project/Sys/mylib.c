@@ -76,7 +76,7 @@ int Num_Ucs2Gbk_Exchange(char *str)
 {
     char num_tmp_saving[64];
     char *num_point = str;
-    char temp_str[50] = {0};
+		char temp_str[50]={0};
 
     int i = 0;
 
@@ -121,13 +121,15 @@ int Num_Ucs2Gbk_Exchange(char *str)
         case 57:
             sprintf(num_tmp_saving, "%s", "0039");
             break;
-        default:
-            continue;
+				default:
+						continue;
+				
         }
+				
         strcat(temp_str, num_tmp_saving);
     }
-    memset(str, 0, 50);
-    strcat(str, temp_str);
+		memset(str,0,50);
+		strcat(str,temp_str);
     return true;
 }
 

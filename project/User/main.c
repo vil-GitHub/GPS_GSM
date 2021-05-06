@@ -64,7 +64,7 @@ int main(void)
       {
         Reset_Led();
       }
-      Clr_Struct();
+			Clr_Struct();
     }
   }
 }

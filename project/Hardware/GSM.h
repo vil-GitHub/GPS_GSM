@@ -3,7 +3,7 @@
 #include "USART.h"
 #include "mylib.h"
 
-#define PHONE_NUM "18069440529" //目标电话号码
+#define PHONE_NUM "13083830861" //目标电话号码
 
 extern u16 Usart2_Point;
 

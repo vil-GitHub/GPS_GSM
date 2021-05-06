@@ -109,41 +109,6 @@ void ParseGpsBuffer(void)
     }
 }
 
-// void PrintGpsBuffer(void)
-// {
-//     if (SaveData.isParseData)
-//     {
-//         SaveData.isParseData = false;
-//         printf("SaveData.UTCTime = ");
-//         printf(SaveData.UTCTime);
-//         printf("\r\n");
-
-//         if (SaveData.isUsefull)
-//         {
-//             SaveData.isUsefull = false;
-//             printf("SaveData.latitude = ");
-//             printf(SaveData.latitude);
-//             printf("\r\n");
-
-//             printf("SaveData.N_S = ");
-//             printf(SaveData.N_S);
-//             printf("\r\n");
-
-//             printf("Save_Data.longitude = ");
-//             printf(SaveData.longitude);
-//             printf("\r\n");
-
-//             printf("SaveData.E_W = ");
-//             printf(SaveData.E_W);
-//             printf("\r\n");
-//         }
-//         else
-//         {
-//             printf("GPS DATA is not usefull!\r\n");
-//         }
-//     }
-// }
-
 //Package gps content
 void PackageGpsBuffer(void)
 {

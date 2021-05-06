@@ -1,12 +1,12 @@
 #include "mylib.h"
 
-// unsigned long mid_latitude_degree; //经纬度处理 经度的度
-// unsigned long mid_latitude_points; //经纬度处理 经度的分
-// unsigned long mid_latitude_vale;   //经纬度处理 经度的中间变量
+unsigned long mid_latitude_degree; //经纬度处理 经度的度
+unsigned long mid_latitude_points; //经纬度处理 经度的分
+unsigned long mid_latitude_vale;   //经纬度处理 经度的中间变量
 
-// unsigned long mid_longitude_degree; //经纬度处理 经度的度
-// unsigned long mid_longitude_points; //经纬度处理 经度的分
-// unsigned long mid_longitude_vale;   //经纬度处理 经度的中间变量
+unsigned long mid_longitude_degree; //经纬度处理 经度的度
+unsigned long mid_longitude_points; //经纬度处理 经度的分
+unsigned long mid_longitude_vale;   //经纬度处理 经度的中间变量
 
 static u8 fac_us = 0;  //us延时倍乘数
 static u16 fac_ms = 0; //ms延时倍乘数,在ucos下,代表每个节拍的ms数
@@ -71,12 +71,54 @@ void delay_s(u8 s)
     delay_ms(s * 100); //10
 }
 
+void Deal_Latitude_Gps(void)
+{
+    mid_latitude_degree = (SaveData.latitude[0] - 0x30) * 10000000 + (SaveData.latitude[1] - 0x30) * 1000000; //获取度的数据
+
+    mid_latitude_points = (SaveData.latitude[2] - 0x30) * 10000000 + (SaveData.latitude[3] - 0x30) * 1000000 +
+                          (SaveData.latitude[5] - 0x30) * 100000 + (SaveData.latitude[6] - 0x30) * 10000 +
+                          (SaveData.latitude[7] - 0x30) * 1000 + (SaveData.latitude[8] - 0x30) * 100; //获取分的数据
+    mid_latitude_points = mid_latitude_points / 60;                                                   //分秒换算为小数位
+    mid_latitude_vale = mid_latitude_degree + mid_latitude_points;                                    //最终为度格式000.00000000 非度分秒格式
+    SaveData.latitude[0] = '0';
+    SaveData.latitude[1] = mid_latitude_vale / 10000000 + 0x30; //转化为字符
+    SaveData.latitude[2] = (mid_latitude_vale / 1000000) % 10 + 0x30;
+    SaveData.latitude[3] = '.';
+    SaveData.latitude[4] = (mid_latitude_vale / 100000) % 10 + 0x30;
+    SaveData.latitude[5] = (mid_latitude_vale / 10000) % 10 + 0x30;
+    SaveData.latitude[6] = (mid_latitude_vale / 1000) % 10 + 0x30;
+    SaveData.latitude[7] = (mid_latitude_vale / 100) % 10 + 0x30;
+    SaveData.latitude[8] = (mid_latitude_vale / 10) % 10 + 0x30;
+    SaveData.latitude[9] = mid_latitude_vale % 10 + 0x30;
+}
+
+void Deal_Longitude_Gps(void)
+{
+    mid_longitude_degree = (SaveData.longitude[0] - 0x30) * 100000000 + (SaveData.longitude[1] - 0x30) * 10000000 + (SaveData.longitude[2] - 0x30) * 1000000; //获取度的数据
+
+    mid_longitude_points = (SaveData.longitude[3] - 0x30) * 10000000 + (SaveData.longitude[4] - 0x30) * 1000000 +
+                           (SaveData.longitude[5] - 0x30) * 100000 + (SaveData.longitude[6] - 0x30) * 10000 +
+                           (SaveData.longitude[7] - 0x30) * 1000 + (SaveData.longitude[8] - 0x30) * 100; //获取分的数据
+    mid_longitude_points = mid_longitude_points / 60;                                                    //分秒换算为小数位
+    mid_longitude_vale = mid_longitude_degree + mid_longitude_points;                                    //最终为度格式000.00000000 非度分秒格式
+    SaveData.longitude[0] = mid_longitude_vale / 100000000 + 0x30;
+    SaveData.longitude[1] = mid_longitude_vale / 10000000 + 0x30; //转化为字符
+    SaveData.longitude[2] = (mid_longitude_vale / 1000000) % 10 + 0x30;
+    SaveData.longitude[3] = '.';
+    SaveData.longitude[4] = (mid_longitude_vale / 100000) % 10 + 0x30;
+    SaveData.longitude[5] = (mid_longitude_vale / 10000) % 10 + 0x30;
+    SaveData.longitude[6] = (mid_longitude_vale / 1000) % 10 + 0x30;
+    SaveData.longitude[7] = (mid_longitude_vale / 100) % 10 + 0x30;
+    SaveData.longitude[8] = (mid_longitude_vale / 10) % 10 + 0x30;
+    SaveData.longitude[9] = mid_longitude_vale % 10 + 0x30;
+}
+
 //Exchange num to usc
 int Num_Ucs2Gbk_Exchange(char *str)
 {
     char num_tmp_saving[64];
     char *num_point = str;
-		char temp_str[50]={0};
+    char temp_str[50] = {0};
 
     int i = 0;
 
@@ -121,15 +163,13 @@ int Num_Ucs2Gbk_Exchange(char *str)
         case 57:
             sprintf(num_tmp_saving, "%s", "0039");
             break;
-				default:
-						continue;
-				
+        default:
+            continue;
         }
-				
         strcat(temp_str, num_tmp_saving);
     }
-		memset(str,0,50);
-		strcat(str,temp_str);
+    memset(str, 0, 50);
+    strcat(str, temp_str);
     return true;
 }
 
@@ -152,23 +192,3 @@ void errorLog(int num)
     sprintf(TEMP_Error_Buffer, "95198BEF662F0020%d000D000A", num);
     strcpy(SaveData.Gps2Gsm_Buffer, TEMP_Error_Buffer);
 }
-
-// void Deal_Latitude_Gps(char *str)
-// {
-//     mid_latitude_degree = (str[0] - 0x30) * 10000000 + (str[1] - 0x30) * 1000000;
-//     mid_latitude_points = (str[2] - 0x30) * 10000000 + (str[3] - 0x30) * 1000000 +
-//                           (str[4] - 0x30) * 100000 + (str[5] - 0x30) * 10000 +
-//                           (str[6] - 0x30) * 1000 + (str[7] - 0x30) * 100;
-//     mid_latitude_points = mid_latitude_points / 60;                //分秒换算为小数位
-//     mid_latitude_vale = mid_latitude_degree + mid_latitude_points; //最终为度格式000.00000000 非度分秒格式
-//     Lin0_No[0] = '0';
-//     Lin0_No[1] = mid_latitude_vale / 10000000 + 0x30; //转化为字符
-//     Lin0_No[2] = (mid_latitude_vale / 1000000) % 10 + 0x30;
-//     Lin0_No[3] = '.';
-//     Lin0_No[4] = (mid_latitude_vale / 100000) % 10 + 0x30;
-//     Lin0_No[5] = (mid_latitude_vale / 10000) % 10 + 0x30;
-//     Lin0_No[6] = (mid_latitude_vale / 1000) % 10 + 0x30;
-//     Lin0_No[7] = (mid_latitude_vale / 100) % 10 + 0x30;
-//     Lin0_No[8] = (mid_latitude_vale / 10) % 10 + 0x30;
-//     Lin0_No[9] = mid_latitude_vale % 10 + 0x30;
-// }

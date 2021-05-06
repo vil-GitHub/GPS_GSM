@@ -26,6 +26,8 @@ void delay_init(void);
 void delay_ms(u16 nms);
 void delay_us(u32 nus);
 void delay_s(u8 s);
+void Deal_Latitude_Gps(void);
+void Deal_Longitude_Gps(void);
 int Num_Ucs2Gbk_Exchange(char *str);
 void errorLog(int num);
 u8 Find(char *str);

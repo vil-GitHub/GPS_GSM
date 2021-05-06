@@ -73,14 +73,14 @@ void delay_s(u8 s)
 
 void Deal_Latitude_Gps(void)
 {
-    mid_latitude_degree = (SaveData.latitude[0] - 0x30) * 100000000 + (SaveData.latitude[1] - 0x30) * 10000000 + (SaveData.longitude[2] - 0x30) * 1000000; //获取度的数据
+    mid_latitude_degree = (SaveData.latitude[0] - 0x30) * 10000000 + (SaveData.latitude[1] - 0x30) * 1000000; //获取度的数据
 
-    mid_latitude_points = (SaveData.latitude[3] - 0x30) * 10000000 + (SaveData.latitude[4] - 0x30) * 1000000 +
+    mid_latitude_points = (SaveData.latitude[2] - 0x30) * 10000000 + (SaveData.latitude[3] - 0x30) * 1000000 +
                           (SaveData.latitude[5] - 0x30) * 100000 + (SaveData.latitude[6] - 0x30) * 10000 +
                           (SaveData.latitude[7] - 0x30) * 1000 + (SaveData.latitude[8] - 0x30) * 100; //获取分的数据
     mid_latitude_points = mid_latitude_points / 60;                                                   //分秒换算为小数位
     mid_latitude_vale = mid_latitude_degree + mid_latitude_points;                                    //最终为度格式000.00000000 非度分秒格式
-    SaveData.latitude[0] = mid_latitude_vale / 100000000 + 0x30;
+    SaveData.latitude[0] = '0';
     SaveData.latitude[1] = mid_latitude_vale / 10000000 + 0x30; //转化为字符
     SaveData.latitude[2] = (mid_latitude_vale / 1000000) % 10 + 0x30;
     SaveData.latitude[3] = '.';
@@ -94,14 +94,14 @@ void Deal_Latitude_Gps(void)
 
 void Deal_Longitude_Gps(void)
 {
-    mid_longitude_degree = (SaveData.longitude[0] - 0x30) * 10000000 + (SaveData.longitude[1] - 0x30) * 1000000; //获取度的数据
+    mid_longitude_degree = (SaveData.longitude[0] - 0x30) * 100000000 + (SaveData.longitude[1] - 0x30) * 10000000 + (SaveData.longitude[2] - 0x30) * 1000000; //获取度的数据
 
-    mid_longitude_points = (SaveData.longitude[2] - 0x30) * 10000000 + (SaveData.longitude[3] - 0x30) * 1000000 +
+    mid_longitude_points = (SaveData.longitude[3] - 0x30) * 10000000 + (SaveData.longitude[4] - 0x30) * 1000000 +
                            (SaveData.longitude[5] - 0x30) * 100000 + (SaveData.longitude[6] - 0x30) * 10000 +
                            (SaveData.longitude[7] - 0x30) * 1000 + (SaveData.longitude[8] - 0x30) * 100; //获取分的数据
     mid_longitude_points = mid_longitude_points / 60;                                                    //分秒换算为小数位
     mid_longitude_vale = mid_longitude_degree + mid_longitude_points;                                    //最终为度格式000.00000000 非度分秒格式
-    SaveData.longitude[0] = '0';
+    SaveData.longitude[0] = mid_longitude_vale / 100000000 + 0x30;
     SaveData.longitude[1] = mid_longitude_vale / 10000000 + 0x30; //转化为字符
     SaveData.longitude[2] = (mid_longitude_vale / 1000000) % 10 + 0x30;
     SaveData.longitude[3] = '.';

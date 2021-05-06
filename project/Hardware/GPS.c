@@ -123,13 +123,13 @@ void PackageGpsBuffer(void)
             memset(TEMP_Gps_Buffer, 0, Gps2Gsm_Buffer_Length);
             Deal_Latitude_Gps();
             Num_Ucs2Gbk_Exchange(SaveData.latitude);
-            sprintf(TEMP_Gps_Buffer, "7EAC5EA6575068074E3AFF1A0020%s000D000A", SaveData.latitude); //经度坐标为：
+            sprintf(TEMP_Gps_Buffer, "7EAC5EA6575068074E3AFF1A0020%s000D000A", SaveData.latitude); //纬度坐标为：
             strcat(SaveData.Gps2Gsm_Buffer, TEMP_Gps_Buffer);
 
             memset(TEMP_Gps_Buffer, 0, Gps2Gsm_Buffer_Length);
             Deal_Longitude_Gps();
             Num_Ucs2Gbk_Exchange(SaveData.longitude);
-            sprintf(TEMP_Gps_Buffer, "7ECF5EA6575068074E3AFF1A0020%s000D000A", SaveData.longitude); //纬度坐标为：
+            sprintf(TEMP_Gps_Buffer, "7ECF5EA6575068074E3AFF1A0020%s000D000A", SaveData.longitude); //经度坐标为：
             strcat(SaveData.Gps2Gsm_Buffer, TEMP_Gps_Buffer);
         }
         else

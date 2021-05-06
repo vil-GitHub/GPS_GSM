@@ -1,12 +1,12 @@
 #include "mylib.h"
 
-unsigned long mid_latitude_degree; //经纬度处理 经度的度
-unsigned long mid_latitude_points; //经纬度处理 经度的分
-unsigned long mid_latitude_vale;   //经纬度处理 经度的中间变量
+unsigned long mid_latitude_degree = 0; //经纬度处理 经度的度
+unsigned long mid_latitude_points = 0; //经纬度处理 经度的分
+unsigned long mid_latitude_vale = 0;   //经纬度处理 经度的中间变量
 
-unsigned long mid_longitude_degree; //经纬度处理 经度的度
-unsigned long mid_longitude_points; //经纬度处理 经度的分
-unsigned long mid_longitude_vale;   //经纬度处理 经度的中间变量
+unsigned long mid_longitude_degree = 0; //经纬度处理 经度的度
+unsigned long mid_longitude_points = 0; //经纬度处理 经度的分
+unsigned long mid_longitude_vale = 0;   //经纬度处理 经度的中间变量
 
 static u8 fac_us = 0;  //us延时倍乘数
 static u16 fac_ms = 0; //ms延时倍乘数,在ucos下,代表每个节拍的ms数

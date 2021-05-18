@@ -48,8 +48,6 @@ void ParseGpsBuffer(void)
     if (SaveData.isGetData)
     {
         SaveData.isGetData = false;
-        //printf("*************\r\n");
-        //printf(SaveData.GPS_Buffer);
 
         for (i = 0; i <= 6; i++)
         {
